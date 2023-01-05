@@ -31,4 +31,10 @@ struct Animal: Codable {
     let publishedAt: String?
     let distance: Double?
     var ranking: Int? = 0
+
+    var picture: URL? {
+        photos.first?.medium ?? photos.first?.large
+    }
 }
+
+extension Animal: Identifiable {}
