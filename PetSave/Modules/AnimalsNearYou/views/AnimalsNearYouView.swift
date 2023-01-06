@@ -27,7 +27,7 @@ struct AnimalsNearYouView: View {
             .navigationTitle("Animals near you")
             .overlay {
                 if isLoading {
-                    ProgressView("Finding Animals near you...\n Please wait!")
+                    ProgressView("Finding Animals near you...\nPlease wait!")
                 }
             }
         }.navigationViewStyle(StackNavigationViewStyle())

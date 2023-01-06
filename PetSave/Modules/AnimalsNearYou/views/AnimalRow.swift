@@ -30,7 +30,8 @@ struct AnimalRow: View {
             }
 //            .aspectRatio(contentMode: .fit)
             .frame(width: 112, height: 112)
-            .cornerRadius(8)
+//            .cornerRadius(8)
+            .clipShape(Circle())
 
             VStack(alignment: .leading) {
                 Text(animal.name)
