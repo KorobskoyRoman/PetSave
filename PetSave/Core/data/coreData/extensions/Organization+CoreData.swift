@@ -30,60 +30,31 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import XCTest
-@testable import PetSave
 import CoreData
 
-class CoreDataTests: XCTestCase {
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+// MARK: - CoreDataPersistable
+extension Organization: CoreDataPersistable {
+  var keyMap: [PartialKeyPath<Organization>: String] {
+    [
+      \.distance: "distance",
+      \.contact: "contact"
+    ]
+  }
+
+  init(managedObject: OrganizationEntity?) {
+    guard let managedObject = managedObject else { return }
+    self.id = Int(managedObject.id)
+    self.distance = managedObject.distance
+    guard let contact = managedObject.contact else { return }
+    self.contact = Contact(managedObject: contact)
+  }
+
+  mutating func toManagedObject(context: NSManagedObjectContext) -> OrganizationEntity {
+    let persistedValue = OrganizationEntity.init(context: context)
+    persistedValue.distance = self.distance ?? 0.0
+    if var contact = self.contact {
+      persistedValue.contact = contact.toManagedObject(context: context)
     }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
-    func testTooManagedObject() throws {
-        let previewContext = PersistenceController.preview.container.viewContext
-
-        let fetchRequest = AnimalEntity.fetchRequest()
-
-        fetchRequest.fetchLimit = 1
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: \AnimalEntity.name, ascending: true)]
-
-        guard let results = try? previewContext.fetch(fetchRequest),
-              let first = results.first else { return }
-
-        XCTAssert(first.name == "CHARLA", """
-         Pet name did not match, was expecting Kiki, got
-         \(String(describing: first.name))
-         """)
-        XCTAssert(first.type == "Dog", """
-         Pet type did not match, was expecting Cat, got
-         \(String(describing: first.type))
-         """)
-        XCTAssert(first.coat.rawValue == "Short", """
-         Pet coat did not match, was expecting Short, got
-         \(first.coat.rawValue)
-         """)
-    }
-
-    func testDeleteManagedObject() throws {
-        let previewContext = PersistenceController.preview.container.viewContext
-
-        let fetchRequest = AnimalEntity.fetchRequest()
-
-        guard let results = try? previewContext.fetch(fetchRequest),
-              let first = results.first else { return }
-
-        let expectedResults = results.count - 1
-        previewContext.delete(first)
-
-        guard let resltsAfterDeletion = try? previewContext.fetch(fetchRequest) else { return }
-
-        XCTAssert(expectedResults, resltsAfterDeletion.count, """
-        The number of results was expected to be \(expectedResult)
-        after deletion, was \(results.count)
-        """)
-    }
+    return persistedValue
+  }
 }
