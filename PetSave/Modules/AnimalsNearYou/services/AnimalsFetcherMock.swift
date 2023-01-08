@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct AnimalsFetcherMock: AnimalsFetcher {
+    func fetchAnimals(page: Int) async -> [Animal] {
+        Animal.mock
+    }
+}
