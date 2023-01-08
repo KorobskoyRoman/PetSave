@@ -19,7 +19,7 @@ struct AnimalRow: View {
                 let img = animal.type == "Cat" ? Image("defCat") : Image("defDog")
                 img
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .overlay {
                         if animal.picture != nil {
                             ProgressView()
@@ -28,10 +28,14 @@ struct AnimalRow: View {
                         }
                     }
             }
-//            .aspectRatio(contentMode: .fit)
             .frame(width: 112, height: 112)
-//            .cornerRadius(8)
             .clipShape(Circle())
+            .overlay(
+                Circle().stroke(
+                Color.gray,
+                lineWidth: 4)
+            )
+            .shadow(radius: 10)
 
             VStack(alignment: .leading) {
                 Text(animal.name ?? "N/A")
