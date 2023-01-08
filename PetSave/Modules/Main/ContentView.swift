@@ -37,7 +37,16 @@ struct ContentView: View {
 
   var body: some View {
     TabView {
-      AnimalsNearYouView()
+        AnimalsNearYouView(
+            viewModel: AnimalsNearYouViewModel(
+                animalFetcher: FetchAnimalsService(
+                    requestManager: RequestManager()
+                ),
+                animalStorage: AnimalStorageService(
+                    context: PersistenceController.shared.container.viewContext
+                )
+            )
+        )
         .tabItem {
           Label("Near you", systemImage: "location")
         }
