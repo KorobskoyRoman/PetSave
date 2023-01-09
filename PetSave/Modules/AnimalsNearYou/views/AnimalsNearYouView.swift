@@ -8,33 +8,32 @@
 import SwiftUI
 
 struct AnimalsNearYouView: View {
-    @State var isLoading = true
-    @SectionedFetchRequest<String, AnimalEntity>(
-        sectionIdentifier: \AnimalEntity.animalSpecies,
+    @FetchRequest(
         sortDescriptors: [
-            NSSortDescriptor(keyPath: \AnimalEntity.timestamp,
-                             ascending: true)
+            NSSortDescriptor(keyPath: \AnimalEntity.timestamp, ascending: true)
         ],
         animation: .default
     )
-    private var sectionedAnimals: SectionedFetchResults<String, AnimalEntity>
+    private var animals: FetchedResults<AnimalEntity>
 
-    private let requestManager = RequestManager()
+    @ObservedObject var viewModel: AnimalsNearYouViewModel
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(sectionedAnimals) { animals in
-                    Section {
-                        ForEach(animals) { animal in
-                            NavigationLink(destination: AnimalDetailsView()) {
-                                AnimalRow(animal: animal)
-                            }
-                        }
-                    } header: {
-                        Text(animals.id)
+                ForEach(animals) { animal in
+                    NavigationLink(destination: AnimalDetailsView()) {
+                        AnimalRow(animal: animal)
                     }
+                }
 
+                if !animals.isEmpty && viewModel.hasMoreAnimals {
+                    ProgressView("Finding more animals...")
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .task {
+                            await viewModel.fetchMoreAnimals()
+                        }
                 }
             }
             .task {
@@ -43,7 +42,7 @@ struct AnimalsNearYouView: View {
             .listStyle(.plain)
             .navigationTitle("Animals near you")
             .overlay {
-                if isLoading {
+                if viewModel.isLoading && animals.isEmpty{
                     ProgressView("Finding Animals near you...\nPlease wait!")
                         .multilineTextAlignment(.center)
                 }
@@ -54,36 +53,18 @@ struct AnimalsNearYouView: View {
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 
-    @MainActor
-    func stopLoading() async {
-        isLoading = false
-    }
-
-    func fetchAnimals() async {
-        do {
-            let animalsContainer: AnimalsContainer = try await requestManager
-                .perform(
-                    AnimalsRequest.getAnimalsWith(
-                        page: 1,
-                        latitude: nil,
-                        longitude: nil
-                    )
-                )
-
-            for var animal in animalsContainer.animals {
-                animal.toManagedObject()
-            }
-
-            await stopLoading()
-        } catch {
-            print(error)
-        }
+    private func fetchAnimals() async {
+        await viewModel.fetchAnimals()
     }
 }
 
 struct AnimalsNearYouView_Previews: PreviewProvider {
     static var previews: some View {
-        AnimalsNearYouView(isLoading: false)
+        let vm = AnimalsNearYouViewModel(
+            animalFetcher: AnimalsFetcherMock(),
+            animalStorage: AnimalStorageService(context: CoreDataHelper.previewContext)
+        )
+        AnimalsNearYouView(viewModel: vm)
             .environment(\.managedObjectContext,
                           PersistenceController.preview.container.viewContext)
     }

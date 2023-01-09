@@ -19,7 +19,7 @@ struct AnimalRow: View {
                 let img = animal.type == "Cat" ? Image("defCat") : Image("defDog")
                 img
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .overlay {
                         if animal.picture != nil {
                             ProgressView()
@@ -28,18 +28,51 @@ struct AnimalRow: View {
                         }
                     }
             }
-//            .aspectRatio(contentMode: .fit)
             .frame(width: 112, height: 112)
-//            .cornerRadius(8)
             .clipShape(Circle())
+            .overlay(
+                Circle().stroke(
+                Color.gray,
+                lineWidth: 4)
+            )
+            .shadow(radius: 10)
 
             VStack(alignment: .leading) {
                 Text(animal.name ?? "N/A")
                     .multilineTextAlignment(.center)
                     .font(.title3)
+
+                Text(animalBreedAndType)
+                    .font(.callout)
+
+                if let desc = animal.desc {
+                    Text(desc)
+                        .lineLimit(2)
+                        .font(.footnote)
+                }
+
+                HStack {
+                    Text(animal.age.rawValue)
+                        .modifier(AnimalAttributesCard(
+                            color: animal.age.color)
+                        )
+
+                    Text(animal.gender.rawValue)
+                        .modifier(AnimalAttributesCard(
+                            color: .pink)
+                        )
+                }
             }
             .lineLimit(1)
         }
+    }
+
+    var animalType: String {
+        animal.type ?? "N/A"
+    }
+
+    var animalBreedAndType: String {
+        "\(animal.breed) \(animalType)"
     }
 }
 
