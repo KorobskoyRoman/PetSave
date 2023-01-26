@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "petsaveonboarding",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KorobskoyRoman/PetSaveOnboarding",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "2f92244ff642d1b0f02c4b7bf58977c52264d953"
+      }
+    }
+  ],
+  "version" : 2
+}
