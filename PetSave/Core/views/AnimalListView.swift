@@ -12,6 +12,7 @@ struct AnimalListView<Content, Data>: View where Content: View,
                                                  Data.Element: AnimalEntity {
     let animals: Data
     let footer: Content
+    let router = AnimalDetailsRouter()
 
     init(animals: Data, @ViewBuilder footer: () -> Content) {
         self.animals = animals
@@ -27,7 +28,8 @@ struct AnimalListView<Content, Data>: View where Content: View,
     var body: some View {
         List {
             ForEach(animals) { animal in
-                NavigationLink(destination: AnimalDetailsView()) {
+                router.navigate(data: animal)
+                {
                     AnimalRow(animal: animal)
                 }
             }
