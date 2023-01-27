@@ -380,6 +380,15 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		9C0B696829843E7B000EA728 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				9C0B69642982F366000EA728 /* PetSaveTabType.swift */,
+				9C0B69662982F41F000EA728 /* PetSaveTabNavigator.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		9C24ABDD2967174200AACF13 /* Request */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,8 +553,7 @@
 			isa = PBXGroup;
 			children = (
 				9CDB143F29804A6900D30FAE /* AnimalListView.swift */,
-				9C0B69642982F366000EA728 /* PetSaveTabType.swift */,
-				9C0B69662982F41F000EA728 /* PetSaveTabNavigator.swift */,
+				9C0B696829843E7B000EA728 /* Navigation */,
 			);
 			path = views;
 			sourceTree = "<group>";
