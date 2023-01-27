@@ -34,35 +34,38 @@ import SwiftUI
 
 struct ContentView: View {
     let managedObjectContext = PersistenceController.shared.container.viewContext
+    @StateObject var tabNavigator = PetSaveTabNavigator()
 
-  var body: some View {
-    TabView {
-        AnimalsNearYouView(
-            viewModel: AnimalsNearYouViewModel(
-                animalFetcher: FetchAnimalsService(
-                    requestManager: RequestManager()
-                ),
-                animalStorage: AnimalStorageService(
-                    context: PersistenceController.shared.container.viewContext
+    var body: some View {
+        TabView(selection: $tabNavigator.currentTab) {
+            AnimalsNearYouView(
+                viewModel: AnimalsNearYouViewModel(
+                    animalFetcher: FetchAnimalsService(
+                        requestManager: RequestManager()
+                    ),
+                    animalStorage: AnimalStorageService(
+                        context: PersistenceController.shared.container.viewContext
+                    )
                 )
             )
-        )
-        .tabItem {
-          Label("Near you", systemImage: "location")
-        }
-        .environment(\.managedObjectContext, managedObjectContext)
+            .tag(PetSaveTabType.nearYou)
+            .tabItem {
+                Label("Near you", systemImage: "location")
+            }
+            .environment(\.managedObjectContext, managedObjectContext)
 
-      SearchView()
-        .tabItem {
-          Label("Search", systemImage: "magnifyingglass")
+            SearchView()
+                .tag(PetSaveTabType.search)
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+                .environment(\.managedObjectContext, managedObjectContext)
         }
-        .environment(\.managedObjectContext, managedObjectContext)
     }
-  }
 }
 
 struct ContentView_Previews: PreviewProvider {
-  static var previews: some View {
-    ContentView()
-  }
+    static var previews: some View {
+        ContentView()
+    }
 }
