@@ -25,7 +25,7 @@ struct AnimalDetailsRouter: NavigationRouter {
     ) -> AnyView where T : View {
         AnyView(
             NavigationLink(
-                destination: AnimalDetailsView(name: data.name ?? "")
+                destination: AnimalDetailsView(animal: data)
             ) {
                 view?()
             }

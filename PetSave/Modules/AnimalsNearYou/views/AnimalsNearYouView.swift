@@ -22,12 +22,14 @@ struct AnimalsNearYouView: View {
         NavigationView {
             AnimalListView(animals: animals) {
                 if !animals.isEmpty && viewModel.hasMoreAnimals {
-                    ProgressView("Finding more animals...")
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .task {
-                            await viewModel.fetchMoreAnimals()
-                        }
+                    HStack(alignment: .center) {
+                        LoadingAnimation()
+                            .frame(maxWidth: 125, maxHeight: 125)
+                        Text("Loading more animals")
+                    }
+                    .task {
+                        await viewModel.fetchMoreAnimals()
+                    }
                 }
             }
             .task {
