@@ -46,6 +46,7 @@ struct AnimalContactLink: View {
         Text(title)
           .font(.callout)
       }
+      .padding(.horizontal)
       .foregroundColor(color)
       .lineLimit(1)
       .minimumScaleFactor(0.1)
