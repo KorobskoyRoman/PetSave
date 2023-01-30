@@ -44,6 +44,7 @@
 		9C0B69672982F41F000EA728 /* PetSaveTabNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B69662982F41F000EA728 /* PetSaveTabNavigator.swift */; };
 		9C0B696A29843EAD000EA728 /* LoadingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B696929843EAD000EA728 /* LoadingAnimation.swift */; };
 		9C0B696D29844805000EA728 /* PetRankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B696C29844805000EA728 /* PetRankingView.swift */; };
+		9C0B696F29882329000EA728 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B696E29882329000EA728 /* LikeButton.swift */; };
 		9C24ABDA2965FD9600AACF13 /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C24ABD92965FD9600AACF13 /* Animal.swift */; };
 		9C24ABDC2966003900AACF13 /* AnimalsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C24ABDB2966003900AACF13 /* AnimalsMock.swift */; };
 		9C24ABDF2967175F00AACF13 /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C24ABDE2967175F00AACF13 /* RequestProtocol.swift */; };
@@ -184,6 +185,7 @@
 		9C0B69662982F41F000EA728 /* PetSaveTabNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetSaveTabNavigator.swift; sourceTree = "<group>"; };
 		9C0B696929843EAD000EA728 /* LoadingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimation.swift; sourceTree = "<group>"; };
 		9C0B696C29844805000EA728 /* PetRankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRankingView.swift; sourceTree = "<group>"; };
+		9C0B696E29882329000EA728 /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		9C24ABD92965FD9600AACF13 /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
 		9C24ABDB2966003900AACF13 /* AnimalsMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalsMock.swift; sourceTree = "<group>"; };
 		9C24ABDE2967175F00AACF13 /* RequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				84B0507726B0E8F500E0A709 /* AnimalContactLink.swift */,
 				84B0507326B0E45000E0A709 /* AnimalLocationView.swift */,
 				8472150726C1EC33001FD40B /* AnimalHeaderView.swift */,
+				9C0B696E29882329000EA728 /* LikeButton.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -999,6 +1002,7 @@
 				9C24ABDC2966003900AACF13 /* AnimalsMock.swift in Sources */,
 				AE6A3782269B57940054C842 /* SearchView.swift in Sources */,
 				9C24ABF52967246700AACF13 /* RequestManager.swift in Sources */,
+				9C0B696F29882329000EA728 /* LikeButton.swift in Sources */,
 				9CA562FB296B54EF00F0892C /* AnimalAttributesCard.swift in Sources */,
 				9C24ABF82967268B00AACF13 /* AuthTokenRequest.swift in Sources */,
 				845137A72796247E00A4DA57 /* AnimalTypeSuggestionView.swift in Sources */,

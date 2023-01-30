@@ -49,18 +49,19 @@ struct AnimalHeaderView: View {
             HStack {
                 AnimalImage(animalPicture: animal.picture, zoomed: $zoomed, geometry: geometry)
                 HeaderTitle(animal: animal, zoomed: $zoomed, geometry: geometry)
-                Image(systemName: favorited ? "heart.fill" : "heart")
-                    .font(.system(size: 50))
-                    .foregroundColor( favorited ? Color(.systemRed) : Color(.black))
-                    .frame(minWidth: 50, maxWidth: 50, minHeight: 50, maxHeight: 50)
-                    .animation(favorited ? .interpolatingSpring(
-                        mass: 5,
-                        stiffness: 3.0,
-                        damping: 1.0,
-                        initialVelocity: 1) : .default, value: $favorited.wrappedValue)
-                    .onTapGesture {
-                        $favorited.wrappedValue.toggle()
-                    }
+//                Image(systemName: favorited ? "heart.fill" : "heart")
+//                    .font(.system(size: 50))
+//                    .foregroundColor( favorited ? Color(.systemRed) : Color(.black))
+//                    .frame(minWidth: 50, maxWidth: 50, minHeight: 50, maxHeight: 50)
+//                    .animation(favorited ? .interpolatingSpring(
+//                        mass: 5,
+//                        stiffness: 3.0,
+//                        damping: 1.0,
+//                        initialVelocity: 1) : .default, value: $favorited.wrappedValue)
+//                    .onTapGesture {
+//                        $favorited.wrappedValue.toggle()
+//                    }
+                LikeButton(isPressed: $favorited)
                 Spacer(minLength: 25)
             }
         }
