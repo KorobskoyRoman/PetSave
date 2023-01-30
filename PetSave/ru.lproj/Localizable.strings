@@ -1,0 +1,25 @@
+/* 
+  Localizable.strings
+  PetSave
+
+  Created by Roman Korobskoy on 30.01.2023.
+  
+*/
+
+"Age" = "Возраст";
+"Gender" = "Пол";
+"Size" = "Размер";
+"Coat" = "Шерсть";
+"Adult" = "Взрослый";
+"Male" = "Мальчик";
+"Female" = "Девочка";
+"Unknown" = "Неизвестно";
+"Short" = "Короткая";
+"Details" = "Подробности";
+"Contact" = "Контакты";
+"Location" = "Местоположение";
+"Rank me!" = "Оцени меня!";
+"Animals near you" = "Животные поблизости";
+"Near you" = "Поблизости";
+"Search" = "Поиск";
+"Young" = "Молодой";

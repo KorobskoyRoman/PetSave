@@ -47,7 +47,8 @@ struct AnimalDetailCard: View {
     .padding(.vertical)
     .frame(width: 96)
     .background(color.opacity(0.2))
-    .foregroundColor(color.darken(40.0))
+//    .foregroundColor(color.darken(40.0))
+    .foregroundColor(color)
     .cornerRadius(8)
   }
 }

@@ -60,7 +60,7 @@ struct AnimalDetailRow: View {
             AnimalDetailCard(
               title: "Coat",
               value: coat.rawValue,
-              color: .brown
+              color: Color(UIColor(named: "coat-background-color") ?? .systemBrown)
             )
           }
         }
