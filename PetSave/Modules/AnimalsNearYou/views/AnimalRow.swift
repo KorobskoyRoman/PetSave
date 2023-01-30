@@ -44,11 +44,13 @@ struct AnimalRow: View {
 
                 Text(animalBreedAndType)
                     .font(.callout)
+                    .accessibilityHidden(true)
 
                 if let desc = animal.desc {
                     Text(desc)
                         .lineLimit(2)
                         .font(.footnote)
+                        .accessibilityHidden(true)
                 }
 
                 HStack {
@@ -56,6 +58,7 @@ struct AnimalRow: View {
                         .modifier(AnimalAttributesCard(
                             color: animal.age.color)
                         )
+                        .accessibilityHidden(true)
 
                     Text(animal.gender.rawValue)
                         .modifier(AnimalAttributesCard(
@@ -65,6 +68,11 @@ struct AnimalRow: View {
             }
             .lineLimit(1)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityCustomContent("Age", animal.age.rawValue, importance: .high)
+        .accessibilityCustomContent("Breed", animal.breed)
+        .accessibilityCustomContent("Type", animalType)
+        .accessibilityCustomContent("Description", animal.description)
     }
 
     var animalType: String {
