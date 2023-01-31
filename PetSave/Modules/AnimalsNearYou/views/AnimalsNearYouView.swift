@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum ProfileSection : String, CaseIterable {
+    case list = "List"
+    case map = "Map"
+}
+
 struct AnimalsNearYouView: View {
     @FetchRequest(
         sortDescriptors: [
@@ -17,40 +22,94 @@ struct AnimalsNearYouView: View {
     private var animals: FetchedResults<AnimalEntity>
 
     @ObservedObject var viewModel: AnimalsNearYouViewModel
+    @EnvironmentObject var locationManager: LocationManager
+    @State var pickerValue: ProfileSection = .list
 
     var body: some View {
         NavigationView {
-            AnimalListView(animals: animals) {
-                if !animals.isEmpty && viewModel.hasMoreAnimals {
-                    HStack(alignment: .center) {
-                        LoadingAnimation()
-                            .frame(maxWidth: 125, maxHeight: 125)
-                        Text("Loading more animals")
+                if locationManager.locationIsDisabled {
+                    RequestLocationView()
+                        .navigationTitle("Animals near you")
+                } else {
+                    VStack {
+                        Picker("", selection: $pickerValue) {
+                            ForEach(ProfileSection.allCases, id: \.self) { option in
+                                Text(option.rawValue)
+                            }
+                        }.pickerStyle(.segmented)
+                            .padding(.horizontal)
+
+                        switch pickerValue {
+                        case .list:
+                            AnimalListView(animals: animals) {
+                                if !animals.isEmpty && viewModel.hasMoreAnimals {
+                                    HStack(alignment: .center) {
+                                        LoadingAnimation()
+                                            .frame(maxWidth: 125, maxHeight: 125)
+                                        Text("Loading more animals")
+                                    }
+                                    .task {
+                                        await viewModel.fetchMoreAnimals(
+                                            location: locationManager.lastSeenLocation
+                                        )
+                                    }
+                                }
+                            }
+                            .task {
+                                await fetchAnimals()
+                            }
+                            .listStyle(.plain)
+                            .navigationTitle("Animals near you")
+                            .overlay {
+                                if viewModel.isLoading && animals.isEmpty{
+                                    ProgressView("Finding Animals near you...\nPlease wait!")
+                                        .multilineTextAlignment(.center)
+                                }
+                            }
+                            .refreshable {
+                                await fetchAnimals()
+                            }
+                        case .map:
+                            EmptyResultsView(query: "")
+                        }
+                        //                    AnimalListView(animals: animals) {
+                        //                        if !animals.isEmpty && viewModel.hasMoreAnimals {
+                        //                            HStack(alignment: .center) {
+                        //                                LoadingAnimation()
+                        //                                    .frame(maxWidth: 125, maxHeight: 125)
+                        //                                Text("Loading more animals")
+                        //                            }
+                        //                            .task {
+                        //                                await viewModel.fetchMoreAnimals(
+                        //                                    location: locationManager.lastSeenLocation
+                        //                                )
+                        //                            }
+                        //                        }
+                        //                    }
+                        //                    .task {
+                        //                        await fetchAnimals()
+                        //                    }
+                        //                    .listStyle(.plain)
+                        //                    .navigationTitle("Animals near you")
+                        //                    .overlay {
+                        //                        if viewModel.isLoading && animals.isEmpty{
+                        //                            ProgressView("Finding Animals near you...\nPlease wait!")
+                        //                                .multilineTextAlignment(.center)
+                        //                        }
+                        //                    }
+                        //                    .refreshable {
+                        //                        await fetchAnimals()
+                        //                    }
                     }
-                    .task {
-                        await viewModel.fetchMoreAnimals()
-                    }
-                }
+                    .navigationViewStyle(StackNavigationViewStyle())
             }
-            .task {
-                await fetchAnimals()
-            }
-            .listStyle(.plain)
-            .navigationTitle("Animals near you")
-            .overlay {
-                if viewModel.isLoading && animals.isEmpty{
-                    ProgressView("Finding Animals near you...\nPlease wait!")
-                        .multilineTextAlignment(.center)
-                }
-            }
-            .refreshable {
-                await fetchAnimals()
-            }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }
     }
 
     private func fetchAnimals() async {
-        await viewModel.fetchAnimals()
+        await viewModel.fetchAnimals(
+            location: locationManager.lastSeenLocation
+        )
     }
 }
 
@@ -63,5 +122,6 @@ struct AnimalsNearYouView_Previews: PreviewProvider {
         AnimalsNearYouView(viewModel: vm)
             .environment(\.managedObjectContext,
                           PersistenceController.preview.container.viewContext)
+            .environmentObject(LocationManager())
     }
 }

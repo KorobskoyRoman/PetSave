@@ -35,6 +35,7 @@ import SwiftUI
 struct ContentView: View {
     let managedObjectContext = PersistenceController.shared.container.viewContext
     @StateObject var tabNavigator = PetSaveTabNavigator()
+    @StateObject var locationManager = LocationManager()
 
     var body: some View {
         TabView(selection: $tabNavigator.currentTab) {
@@ -61,11 +62,13 @@ struct ContentView: View {
                 }
                 .environment(\.managedObjectContext, managedObjectContext)
         }
+        .environmentObject(locationManager)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(LocationManager())
     }
 }

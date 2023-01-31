@@ -16,11 +16,15 @@ struct FetchAnimalsService {
 }
 
 extension FetchAnimalsService: AnimalsFetcher {
-    func fetchAnimals(page: Int) async -> [Animal] {
+    func fetchAnimals(
+        page: Int,
+        latitude: Double?,
+        longitude: Double?
+    ) async -> [Animal] {
         let requestData = AnimalsRequest.getAnimalsWith(
             page: page,
-            latitude: nil,
-            longitude: nil
+            latitude: latitude,
+            longitude: longitude
         )
 
         do {
