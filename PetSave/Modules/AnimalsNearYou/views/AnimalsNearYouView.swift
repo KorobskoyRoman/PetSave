@@ -72,34 +72,6 @@ struct AnimalsNearYouView: View {
                         case .map:
                             EmptyResultsView(query: "")
                         }
-                        //                    AnimalListView(animals: animals) {
-                        //                        if !animals.isEmpty && viewModel.hasMoreAnimals {
-                        //                            HStack(alignment: .center) {
-                        //                                LoadingAnimation()
-                        //                                    .frame(maxWidth: 125, maxHeight: 125)
-                        //                                Text("Loading more animals")
-                        //                            }
-                        //                            .task {
-                        //                                await viewModel.fetchMoreAnimals(
-                        //                                    location: locationManager.lastSeenLocation
-                        //                                )
-                        //                            }
-                        //                        }
-                        //                    }
-                        //                    .task {
-                        //                        await fetchAnimals()
-                        //                    }
-                        //                    .listStyle(.plain)
-                        //                    .navigationTitle("Animals near you")
-                        //                    .overlay {
-                        //                        if viewModel.isLoading && animals.isEmpty{
-                        //                            ProgressView("Finding Animals near you...\nPlease wait!")
-                        //                                .multilineTextAlignment(.center)
-                        //                        }
-                        //                    }
-                        //                    .refreshable {
-                        //                        await fetchAnimals()
-                        //                    }
                     }
                     .navigationViewStyle(StackNavigationViewStyle())
             }
