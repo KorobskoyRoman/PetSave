@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 import MapKit
+import SwiftUI
 
 final class AddressFetcher: ObservableObject {
   @Published var coordinates = MKCoordinateRegion(
@@ -44,6 +45,8 @@ final class AddressFetcher: ObservableObject {
     )
   )
 
+    @Published var coordOnMap = CLLocationCoordinate2D(latitude: 37.3320003, longitude: -122.0307812)
+
   private let geocoder = CLGeocoder()
 
   @MainActor
@@ -53,4 +56,19 @@ final class AddressFetcher: ObservableObject {
     else { return }
     coordinates.center = location.coordinate
   }
+
+    @MainActor
+    func searchOnMap(by address: FetchedResults<AnimalEntity>) async {
+        address.forEach { animal in
+            Task {
+                let add = animal.address
+
+                guard let placemarks = try? await geocoder.geocodeAddressString(add),
+                      let location = placemarks.first?.location
+                else { return }
+                coordOnMap = location.coordinate
+                coordinates.center = location.coordinate
+            }
+        }
+    }
 }
