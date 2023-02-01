@@ -28,13 +28,13 @@ final class AnimalsNearYouViewModelTestCase: XCTestCase {
 
     func testFetchAnimalsLoadingState() async {
         XCTAssertTrue(viewModel.isLoading, "View model should be loading, but it isn't")
-        await viewModel.fetchAnimals()
+        await viewModel.fetchAnimals(location: nil)
         XCTAssertFalse(viewModel.isLoading, "View model should'nt be loading, but it is")
     }
 
     func testUpdatePageOnFetchMoreAnimals() async {
         XCTAssertEqual(viewModel.page, 1, "Page should be 1, but it's \(viewModel.page)")
-        await viewModel.fetchMoreAnimals()
+        await viewModel.fetchMoreAnimals(location: nil)
         XCTAssertEqual(viewModel.page, 2, "Page should be 2, but it's \(viewModel.page)")
     }
 
@@ -44,7 +44,7 @@ final class AnimalsNearYouViewModelTestCase: XCTestCase {
             animalFetcher: EmptyResponseAnimalsFetcherMock(),
             animalStorage: AnimalStorageService(context: testContext)
         )
-        await viewModel.fetchAnimals()
+        await viewModel.fetchAnimals(location: nil)
 
         XCTAssertFalse(viewModel.hasMoreAnimals, "hasMoreAnimals should be false, but it's true")
         XCTAssertFalse(viewModel.isLoading, "isLoading should be false, but it's true")
@@ -52,7 +52,11 @@ final class AnimalsNearYouViewModelTestCase: XCTestCase {
 }
 
 struct EmptyResponseAnimalsFetcherMock: AnimalsFetcher {
-    func fetchAnimals(page: Int) async -> [Animal] {
+    func fetchAnimals(
+        page: Int,
+        latitude: Double?,
+        longitude: Double?
+    ) async -> [Animal] {
         return []
     }
 }

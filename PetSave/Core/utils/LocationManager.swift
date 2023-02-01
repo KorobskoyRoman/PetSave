@@ -34,23 +34,31 @@ import CoreLocation
 import SwiftUI
 
 final class LocationManager: NSObject, ObservableObject {
-  @Published var authorizationStatus: CLAuthorizationStatus
-  @Published var lastSeenLocation: CLLocation?
+    @Published var authorizationStatus: CLAuthorizationStatus
+    @Published var lastSeenLocation: CLLocation?
 
-  private let cllLocationManager: CLLocationManager
+    private let cllLocationManager: CLLocationManager
 
-  init(authorizationStatus: CLAuthorizationStatus = .notDetermined) {
-    self.authorizationStatus = authorizationStatus
-    self.cllLocationManager = CLLocationManager()
-    super.init()
-    cllLocationManager.delegate = self
-    self.authorizationStatus = cllLocationManager.authorizationStatus
-    cllLocationManager.startUpdatingLocation()
-  }
+    init(authorizationStatus: CLAuthorizationStatus = .notDetermined) {
+        self.authorizationStatus = authorizationStatus
+        self.cllLocationManager = CLLocationManager()
+        super.init()
+        cllLocationManager.delegate = self
+        self.authorizationStatus = cllLocationManager.authorizationStatus
+        cllLocationManager.startUpdatingLocation()
+    }
 
-  func updateAuthorizationStatus() {
-    authorizationStatus = cllLocationManager.authorizationStatus
-  }
+    func updateAuthorizationStatus() {
+        authorizationStatus = cllLocationManager.authorizationStatus
+    }
+
+    func requestWhenInUseAuthorization() {
+        cllLocationManager.requestWhenInUseAuthorization()
+    }
+
+    func startUpdatingLocation() {
+        cllLocationManager.startUpdatingLocation()
+    }
 }
 
 // MARK: - Location status
