@@ -3,4 +3,32 @@
    uuid = "B7BB2D96-CD01-4B3F-94F6-E213333401A2"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4CE1D119-A557-4D45-A534-29B860312026"
+            shouldBeEnabled = "No"
+            nameForDebugger = "LookingForAnimal"
+            condition = "(animal.name?.count ?? 0) &gt; 5"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PetSave/Core/views/AnimalListView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
+                  <ActionContent
+                     consoleCommand = "po animal.name">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
